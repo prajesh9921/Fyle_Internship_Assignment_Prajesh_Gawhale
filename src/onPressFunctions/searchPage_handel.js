@@ -10,13 +10,12 @@ export const onPress = async (
   setCountLoading
 ) => {
   setLoading(true);
+  setCountLoading(true);
   setPageNumber(1);
   setDataCount();
   const data = await SearchApi(1, input, selected);
   setResult(data);
   setLoading(false);
-
-  setCountLoading(true);
   const data_C = await CountApi(input, selected);
   setDataCount(data_C);
   setCountLoading(false);

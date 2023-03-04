@@ -1,24 +1,20 @@
 body{
   padding: 20px;
-  margin: 0;
   background-color: #050404;
-  height: 100%;
   display: flex;
-  justify-content: center;
   color: white;
+  justify-content: center;
   font-family: 'Karla', sans-serif;
 }
 
-
-
 .home{
-  /* background-color: aqua; */
-  border-color: aqua;
-  border-width: 1px;
-  border-style: solid;
-  width: 60vw;
-  align-self: center;
+  border: aqua 1px solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 20px;
+  margin: 0;
+  align-self: center;
 }
 
 .demotext {
