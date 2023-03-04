@@ -1,18 +1,25 @@
-import React, { useRef } from "react";
+import React from "react";
 import Dropdown from "react-dropdown";
 import "../App.css";
-import ResultCard from "./resultCard";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { SearchApi, CountApi } from "../API/searchApi";
-import { onPress } from "../onPressFunctions/handel.js";
-import { InfinitySpin } from "react-loader-spinner";
+import {
+  onPress,
+  handelNext,
+  handelPrev,
+  handel,
+} from "../onPressFunctions/searchPage_handel.js";
+import { InfinitySpin, ColorRing } from "react-loader-spinner";
+import { getCard } from "./resultCard";
+
 
 const Search = () => {
+
   const [selected, setSelected] = React.useState("Title");
   const [input, setInput] = React.useState("");
   const [result, setResult] = React.useState();
   const [loading, setLoading] = React.useState(false);
-  const [dataCount, setDataCount] = React.useState();
+  const [dataCount, setDataCount] = React.useState(10);
   const [pageNumber, setPageNumber] = React.useState(1);
 
   const limit = 10;
@@ -32,89 +39,12 @@ const Search = () => {
       const json_t = await res_title.json();
       const response_t = await json_t.docs;
       setResult(response_t);
-      console.log("Result is: ", result);
       setLoading(false);
-
-      // Api to get the count of API.
-      // console.log("counting api invoked");
-      // const res_count = await fetch(
-      //   `https://openlibrary.org/search.json?title=star+wars`
-      // );
-      // const json_c = await res_count.json();
-      // const response_c = await json_c.docs;
-      // setDataCount(response_c.length);
-      // console.log(dataCount);
     }
     getdata();
   }, []);
 
-  const handel = (event) => {
-    event.preventDefault();
-    const { value } = event.target;
-    setInput(value);
-  };
-
-  const handelNext = async () => {
-    console.log("---------------------------------------");
-    console.log("page number before start:" + pageNumber);
-    console.log("Total pages", Math.ceil(dataCount / limit));
-
-    if (pageNumber < Math.ceil(dataCount / limit)) {
-      console.log("Next Button Invoked");
-
-      setLoading(true);
-      setPageNumber(pageNumber + 1);
-      console.log(pageNumber);
-      const nextData = await SearchApi(pageNumber + 1, input, selected);
-      setResult(nextData);
-      console.log("nextData:", nextData);
-      setLoading(false);
-    }
-  };
-
-  const handelPrev = async () => {
-    console.log("--------------------------------------");
-    console.log("page number before start:" + pageNumber);
-
-    if (pageNumber > 1) {
-      console.log("Previous button invoked");
-
-      setLoading(true);
-      setPageNumber(pageNumber - 1);
-      console.log(pageNumber);
-      const prevData = await SearchApi(pageNumber - 1, input, selected);
-      setResult(prevData);
-      console.log("prevData:", prevData);
-      setLoading(false);
-    }
-  };
-
-
-  const getCard = () => {
-    if (!result || !result.length) {
-      return <p>result not found</p>;
-    }
-    return result?.map((info, index) => {
-      try {
-        if (!info || !index) {
-          return null;
-        }
-        return (
-          <ResultCard
-            key={index}
-            title={info?.title || ""}
-            author={info?.author_name[0] || ""}
-            first_publish_year={info?.first_publish_year || ""}
-            latest_year={info?.publish_year[0] || ""}
-          />
-        );
-      } catch (err) {
-        console.log("error in map", err, info);
-      }
-    });
-  };
-
-  const cards = getCard();
+  const cards = getCard(result);
 
   return (
     <div className="search-container">
@@ -139,7 +69,7 @@ const Search = () => {
           name="search"
           value={input}
           placeholder="Search by title or author, ex: star wars"
-          onChange={handel}
+          onChange={(event) => handel(event, setInput)}
         />
         <button
           className="search-button"
@@ -161,7 +91,6 @@ const Search = () => {
           SEARCH
         </button>
       </div>
-
       {loading ? (
         <div className="loader">
           <InfinitySpin width="200" color="#4fa94d" />
@@ -172,18 +101,48 @@ const Search = () => {
           {cards}
         </div>
       )}
-
       <div className="buttons">
         <button
           className="previous-button"
-          onClick={handelPrev}
+          onClick={() =>
+            handelPrev(
+              pageNumber,
+              setLoading,
+              setPageNumber,
+              SearchApi,
+              input,
+              selected,
+              setResult
+            )
+          }
         >
           Previous
         </button>
         <button className="preview-button">{pageNumber}</button>
         <button className="preview-button">...</button>
-        <button className="preview-button">{dataCount/limit}</button>
-        <button className="next-button" onClick={handelNext}>
+        <button className="preview-button">
+          {!dataCount ? (
+            <ColorRing height="20" width="20" wrapperClass="dataCount-loader" />
+          ) : (
+            dataCount / limit
+          )}
+        </button>
+        <button
+          className="next-button"
+          onClick={() =>
+            handelNext(
+              pageNumber,
+              dataCount,
+              limit,
+              setLoading,
+              setPageNumber,
+              SearchApi,
+              input,
+              selected,
+              setResult
+            )
+          }
+        >
           Next
         </button>
       </div>

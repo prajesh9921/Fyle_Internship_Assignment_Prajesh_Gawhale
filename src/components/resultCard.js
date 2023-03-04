@@ -29,4 +29,27 @@ const ResultCard = (props) => {
   );
 };
 
-export default ResultCard;
+ 
+export const getCard = (result) => {
+  if (!result || !result.length) {
+    return <p>result not found</p>;
+  }
+  return result?.map((info, index) => { 
+    try {
+      if (!info || !index) {
+        return null;
+      };
+      return (
+        <ResultCard
+          key={index}
+          title={info?.title || ""}
+          author={info?.author_name[0] || ""}
+          first_publish_year={info?.first_publish_year || ""}
+          latest_year={info?.publish_year[0] || ""}
+        />
+      );
+    } catch (err) {
+      console.log("error in map", err, info);
+    };
+  });
+};

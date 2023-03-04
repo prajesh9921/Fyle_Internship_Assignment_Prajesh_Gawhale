@@ -8,11 +8,7 @@ const HomePage = () => {
         <div className="home">
             <div className="demotext">Open Library</div>
             <div className="container">
-
-                {/* Subjects */}
                 <Subject/>
-
-                {/* Search */}
                 <Search/>
             </div>
         </div>

@@ -1,8 +1,17 @@
 import React from "react";
 import "../App.css";
 import GetSubjects from "../API/subjectApi";
-import SubjectCard from "./subjectCard";
-import { InfinitySpin } from  'react-loader-spinner';
+import { InfinitySpin } from "react-loader-spinner";
+import {
+  Javascript,
+  Machine,
+  India,
+  CryptoCurrency,
+  BlockChain,
+  Search,
+  SearchCard,
+  SubjectLists,
+} from "../onPressFunctions/subjectPage_handel";
 
 const Subject = () => {
   const [result, setResult] = React.useState();
@@ -11,89 +20,8 @@ const Subject = () => {
   const [loading, setLoading] = React.useState(false);
   const [input, setInput] = React.useState("");
 
-  const Javascript = async () => {
-    setLoading(true);
-    setSubject("javascript");
-    const res = await GetSubjects("javascript");
-    console.log(res);
-    setResult(res);
-    console.log("result is", result);
-    setLoading(false);
-  };
-
-  const Machine = async () => {
-    setLoading(true);
-    setSubject("machine");
-    const res = await GetSubjects("machine");
-    console.log(res);
-    setResult(res);
-    console.log("result is", result);
-    setLoading(false);
-  };
-
-  const India = async () => {
-    setLoading(true);
-    setSubject("india");
-    const res = await GetSubjects("india");
-    console.log(res);
-    setResult(res);
-    console.log("result is", result);
-    setLoading(false);
-  };
-
-  const CryptoCurrency = async () => {
-    setLoading(true);
-    setSubject("crypto_currency");
-    const res = await GetSubjects("crypto currency");
-    console.log(res);
-    setResult(res);
-    console.log("result is", result);
-    setLoading(false);
-  };
-
-  const BlockChain = async () => {
-    setLoading(true);
-    setSubject("blockchain");
-    const res = await GetSubjects("blockchain");
-    console.log(res);
-    setResult(res);
-    console.log("result is", result);
-    setLoading(false);
-  };
-
-  const Search = async () => {
-    setInput("Loading...");
-    const res = await GetSubjects(input, 50);
-    console.log(res);
-    setSearchResult(res);
-    console.log("result is", result);
-
-    if(!res || !res.length) {
-      setInput("no results found");
-    }else{
-      setInput("");
-    }
-    
-  };
-
-  const SubjectsList = result?.map((item, index) => {
-    return <SubjectCard key={index} title={item.title} />;
-  });
-
-  const SearchCard = () => {
-    return searchResult?.map((item, index) => {
-      try{
-        if (!item || !index){
-          return null;
-        }
-        return <SubjectCard key={index} title={item.title} />;
-      }catch(err){
-        console.log("error in map", err, item);
-      }
-    })
-  };
-
-  const SearchSubjectList = SearchCard();
+  const SubjectsList = SubjectLists(result);
+  const SearchSubjectList = SearchCard(searchResult);
 
   return (
     <div className="subject-container">
@@ -106,60 +34,90 @@ const Subject = () => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      <button className="subject-search-button" onClick={Search}>press</button>
-
+      <button
+        className="subject-search-button"
+        onClick={() => Search(setInput, GetSubjects, setSearchResult, input)}
+      >
+        Search
+      </button>
       <div className="subject-card-container">{SearchSubjectList}</div>
-
-      <h6 className="subject-subjects" onClick={Javascript}>
+      <h6
+        className="subject-subjects"
+        onClick={() =>
+          Javascript(setLoading, setSubject, GetSubjects, setResult)
+        }
+      >
         JavaScript
       </h6>
       {subject === "javascript" ? (
         loading ? (
-          <div className="loader"><InfinitySpin width='100' color="#4fa94d"/></div>
+          <div className="loader">
+            <InfinitySpin width="100" color="#4fa94d" />
+          </div>
         ) : (
           SubjectsList
         )
       ) : null}
-
-      <h6 className="subject-subjects" onClick={Machine}>
+      <h6
+        className="subject-subjects"
+        onClick={() => Machine(setLoading, setSubject, GetSubjects, setResult)}
+      >
         Machine
       </h6>
       {subject === "machine" ? (
         loading ? (
-          <div className="loader"><InfinitySpin width='100' color="#4fa94d"/></div>
+          <div className="loader">
+            <InfinitySpin width="100" color="#4fa94d" />
+          </div>
         ) : (
           SubjectsList
         )
       ) : null}
-
-      <h6 className="subject-subjects" onClick={India}>
+      <h6
+        className="subject-subjects"
+        onClick={() => India(setLoading, setSubject, GetSubjects, setResult)}
+      >
         India
       </h6>
       {subject === "india" ? (
         loading ? (
-          <div className="loader"><InfinitySpin width='100' color="#4fa94d"/></div>
+          <div className="loader">
+            <InfinitySpin width="100" color="#4fa94d" />
+          </div>
         ) : (
           SubjectsList
         )
       ) : null}
-
-      <h6 className="subject-subjects" onClick={CryptoCurrency}>
+      <h6
+        className="subject-subjects"
+        onClick={() =>
+          CryptoCurrency(setLoading, setSubject, GetSubjects, setResult)
+        }
+      >
         Crypto Currency
       </h6>
       {subject === "crypto_currency" ? (
         loading ? (
-          <div className="loader"><InfinitySpin width='100' color="#4fa94d"/></div>
+          <div className="loader">
+            <InfinitySpin width="100" color="#4fa94d" />
+          </div>
         ) : (
           SubjectsList
         )
       ) : null}
-
-      <h6 className="subject-subjects" onClick={BlockChain}>
+      <h6
+        className="subject-subjects"
+        onClick={() =>
+          BlockChain(setLoading, setSubject, GetSubjects, setResult)
+        }
+      >
         BlockChain
       </h6>
       {subject === "blockchain" ? (
         loading ? (
-          <div className="loader"><InfinitySpin width='100' color="#4fa94d"/></div>
+          <div className="loader">
+            <InfinitySpin width="100" color="#4fa94d" />
+          </div>
         ) : (
           SubjectsList
         )
