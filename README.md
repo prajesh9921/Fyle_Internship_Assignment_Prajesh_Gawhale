@@ -16,7 +16,7 @@
 ## Documentation
 Please refer the below image to understand the functionalities.
 
-<img src="src/assests/images/open library guide.png" height="1000" width=100%/>
+<img src="src/assests/images/open_library_guide.png" height="1000" width=100%/>
 
 ### Note: When the app loads for the 1'st time it will show you 10 results for "star wars" by default. The next button will not work as only the 10 results are fetched.
 <br>
