@@ -19,6 +19,7 @@ const Search = () => {
   const [input, setInput] = React.useState("");
   const [result, setResult] = React.useState();
   const [loading, setLoading] = React.useState(false);
+  const [countLoading, setCountLoading] = React.useState(false);
   const [dataCount, setDataCount] = React.useState(10);
   const [pageNumber, setPageNumber] = React.useState(1);
 
@@ -81,10 +82,9 @@ const Search = () => {
               setResult,
               input,
               selected,
-              result,
               CountApi,
-              dataCount,
-              setDataCount
+              setDataCount,
+              setCountLoading
             )
           }
         >
@@ -121,7 +121,7 @@ const Search = () => {
         <button className="preview-button">{pageNumber}</button>
         <button className="preview-button">...</button>
         <button className="preview-button">
-          {!dataCount ? (
+          {countLoading ? (
             <ColorRing height="20" width="20" wrapperClass="dataCount-loader" />
           ) : (
             dataCount / limit
