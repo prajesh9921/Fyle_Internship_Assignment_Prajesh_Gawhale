@@ -25,7 +25,7 @@ Refer below table to understand the points.
 | Point No. | Working | by `default` |
 | --- | --- | --- |
 | 1 | This is a drop down button. You can search the book by *title* or *author* by selecting the parameter `title` or `author` from dropdown mwnu  |  `title` |
-| 2 | This is search bar here you can enter the your text for your searching the book | - |
+| 2 | This is a search bar. You can enter your text to search for the books | - |
 | 3 | Search Button. After pressing the button the api will be called to fetch the result for your query | - |
 | 4 | This is a indicator to show for what query the results are showned. It will show star wars when the app loads for the 1st time | "star wars". |
 | 5 | This is the section where the results of your query are shown. Only 10 results are displayed at a time. | Shows only 1'st 10 result for "star wars" | 
@@ -35,4 +35,4 @@ Refer below table to understand the points.
 | 9 | Previous button to go back 1 page | `1` |
 | 10 | Search bar for searching the books on a subject. Enter the subjects you want books about and it will fetch you a list of books. | - |
 | 11 | Search Button. After you enter the subject in search bar above press the search button it will make an api call to fetch the result. | - |
-| 12 | It is a predefined subject. Click on it to get the books on that subject. It will fetch result for block chain. Above there are 4 more subjects which are also predefined and they will also fetch the result for clicked subject.| `blockchain` |
+| 12 | It is a predefined subject. Click on it to get the books on that subject. It will fetch result for block chain. Above there are 4 more subjects which are also predefined and they will also fetch the result for their subject.| `blockchain` |
